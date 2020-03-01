@@ -26,4 +26,5 @@ user=> (j/read-value (read-line))
 ## Links
 
 [Leiningen - "for automating Clojure projects without setting your hair on fire"](https://leiningen.org/)  
-[Lein Plugins](https://github.com/technomancy/leiningen/wiki/Plugins)
+[Lein Plugins](https://github.com/technomancy/leiningen/wiki/Plugins)  
+[Clojure by Example](https://kimh.github.io/clojure-by-example)
