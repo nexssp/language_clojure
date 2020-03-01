@@ -1,0 +1,1 @@
+{:user {:plugins [[lein-exec "0.3.7"][metosin/jsonista "0.2.5"]]}}
