@@ -3,6 +3,9 @@ languageConfig.title = "Clojure";
 languageConfig.description =
   "Clojure is a robust, practical, and fast programming language with a set of useful features that together form a simple, coherent, and powerful tool.";
 languageConfig.url = "https://clojure.org";
+languageConfig.founders = ["Rich Hickey"];
+languageConfig.developers = [""];
+languageConfig.years = ["2007"];
 languageConfig.extensions = [".clj"];
 languageConfig.executeCommandLine = "clj";
 languageConfig.printCommandLine = "";
