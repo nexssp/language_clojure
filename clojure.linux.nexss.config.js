@@ -1,4 +1,4 @@
-let languageConfig = Object.assign({}, require("./php.win32.nexss.config"));
+let languageConfig = Object.assign({}, require("./clojure.win32.nexss.config"));
 languageConfig.compilers = {
   leiningen: {
     install: "apt-get install -y leiningen",
