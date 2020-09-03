@@ -6,6 +6,6 @@ module.exports = {
 Please add a to your '${normalize(
     homedir() + "/.lein/profiles.clj"
   )}' the 'lein-exec' plugin:
-{:user {:plugins [[lein-exec "0.3.7"]]}}
-more here: https://github.com/kumarshantanu/lein-exec`
+{:user {:plugins [[lein-exec "0.3.7"][metosin/jsonista "0.2.7"]]}}
+more here: https://github.com/kumarshantanu/lein-exec`,
 };
