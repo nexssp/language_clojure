@@ -1,4 +1,7 @@
-let languageConfig = Object.assign({}, require("../config.win32"));
+let languageConfig = Object.assign(
+  {},
+  require(`../config.${process.platform}`)
+);
 languageConfig.title = "Clojure";
 languageConfig.description =
   "Clojure is a robust, practical, and fast programming language with a set of useful features that together form a simple, coherent, and powerful tool.";
@@ -17,21 +20,20 @@ languageConfig.compilers = {
     install: "scoop install leiningen",
     command: "lein",
     args: "exec <file>",
-    help: `https://leiningen.org`
+    help: `https://leiningen.org`,
   },
   clj2: {
     install: "scoop install leiningen",
     command: "lein",
     args: "run <file>",
-    help: ``
+    help: ``,
   },
-
   clj: {
     install: "nexss Install/Clojure",
     command: "clj",
     args: "<file>",
-    help: ``
-  }
+    help: ``,
+  },
 };
 languageConfig.errors = require("./nexss.clojure.errors");
 languageConfig.languagePackageManagers = {
@@ -58,8 +60,8 @@ languageConfig.languagePackageManagers = {
     },
     // if command not found in specification
     // run directly on package manager
-    else: "nimble"
-  }
+    else: "nimble",
+  },
 };
 
 module.exports = languageConfig;
