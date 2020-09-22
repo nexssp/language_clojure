@@ -40,10 +40,12 @@ ${sudo}apk add --no-cache --repository=https://apkproxy.herokuapp.com/sgerrand/a
     break;
   default:
     languageConfig.compilers.leiningen.install = replaceCommandByDist(
-      `wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+      `${sudo} apt-get install -y wget
+${sudo}wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 ${sudo}chmod +x lein
 ${sudo}mv lein /usr/local/bin
-${sudo}echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]]}}" > /root/.lein/profiles.clj`
+[ -d ~/.lein/ ] || ${sudo}mkdir ~/.lein/
+${sudo}echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]]}}" > ~/.lein/profiles.clj`
     );
     languageConfig.compilers.leiningen2.install = replaceCommandByDist(
       "apt update && apt install -y leiningen"
