@@ -1,36 +1,32 @@
 let languageConfig = Object.assign({}, require("./clojure.win32.nexss.config"));
-let sudo = "sudo ";
-if (process.getuid && process.getuid() === 0) {
-  sudo = "";
-}
+const os = require(`${process.env.NEXSS_SRC_PATH}/node_modules/@nexssp/os/`);
+const sudo = os.sudo();
+// const os = require("@nexssp/os");
+
+const distName = os.name();
+languageConfig.dist = distName;
+
 languageConfig.compilers = {
   leiningen: {
-    install: `apt-get install -y leiningen
-echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]]}}" > /root/.lein/profiles.clj`,
+    install: `${sudo}apt-get install -y leiningen
+${sudo}echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]]}}" > ~/.lein/profiles.clj`,
     command: "lein",
     args: "exec <file>",
     help: `https://leiningen.org`,
   },
   leiningen2: {
-    install: "apt-get install -y leiningen",
+    install: `${sudo}apt-get install -y leiningen`,
     command: "lein",
     args: "run <file>",
     help: ``,
   },
   clj: {
-    install: "nexss Install/Clojure",
+    install: `nexss Install/Clojure`,
     command: "clj",
     args: "<file>",
     help: ``,
   },
 };
-
-const {
-  replaceCommandByDist,
-  dist,
-} = require(`${process.env.NEXSS_SRC_PATH}/lib/osys`);
-const distName = dist();
-languageConfig.dist = distName;
 
 // TODO: Later to cleanup this config file !!
 switch (distName) {
@@ -39,7 +35,7 @@ switch (distName) {
 ${sudo}apk add --no-cache --repository=https://apkproxy.herokuapp.com/sgerrand/alpine-pkg-leiningen leiningen=2.9.1-r0`;
     break;
   default:
-    languageConfig.compilers.leiningen.install = replaceCommandByDist(
+    languageConfig.compilers.leiningen.install = os.replacePMByDistro(
       `${sudo} apt-get install -y wget
 ${sudo}wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 ${sudo}chmod +x lein
@@ -47,7 +43,7 @@ ${sudo}mv lein /usr/local/bin
 [ -d ~/.lein/ ] || ${sudo}mkdir ~/.lein/
 ${sudo}echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]]}}" > ~/.lein/profiles.clj`
     );
-    languageConfig.compilers.leiningen2.install = replaceCommandByDist(
+    languageConfig.compilers.leiningen2.install = os.replacePMByDistro(
       "apt update && apt install -y leiningen"
     );
     languageConfig.compilers.clj.install = "nexss Install/Clojure";
