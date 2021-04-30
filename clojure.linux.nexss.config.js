@@ -1,9 +1,7 @@
 let languageConfig = Object.assign({}, require("./clojure.win32.nexss.config"));
-const os = require(`${process.env.NEXSS_SRC_PATH}/node_modules/@nexssp/os/`);
-const sudo = os.sudo();
-// const os = require("@nexssp/os");
+const sudo = process.sudo;
+const distName = process.distro;
 
-const distName = os.name();
 languageConfig.dist = distName;
 
 languageConfig.compilers = {
@@ -30,12 +28,12 @@ ${sudo}echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]
 
 // TODO: Later to cleanup this config file !!
 switch (distName) {
-  case "Alpine Linux":
+  case process.distros.ALPINE:
     languageConfig.compilers.leiningen.install = `${sudo}wget -P /etc/apk/keys/ https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 ${sudo}apk add --no-cache --repository=https://apkproxy.herokuapp.com/sgerrand/alpine-pkg-leiningen leiningen=2.9.1-r0`;
     break;
   default:
-    languageConfig.compilers.leiningen.install = os.replacePMByDistro(
+    languageConfig.compilers.leiningen.install = process.replacePMByDistro(
       `${sudo} apt-get install -y wget
 ${sudo}wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 ${sudo}chmod +x lein
@@ -43,7 +41,7 @@ ${sudo}mv lein /usr/local/bin
 [ -d ~/.lein/ ] || ${sudo}mkdir ~/.lein/
 ${sudo}echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]]}}" > ~/.lein/profiles.clj`
     );
-    languageConfig.compilers.leiningen2.install = os.replacePMByDistro(
+    languageConfig.compilers.leiningen2.install = process.replacePMByDistro(
       "apt update && apt install -y leiningen"
     );
     languageConfig.compilers.clj.install = "nexss Install/Clojure";
