@@ -29,12 +29,14 @@ ${sudo}echo "{:user {:plugins [[lein-exec \"0.3.7\"][metosin/jsonista \"0.2.7\"]
 // TODO: Later to cleanup this config file !!
 switch (distName) {
   case process.distros.ALPINE:
-    languageConfig.compilers.leiningen.install = `${sudo}wget -P /etc/apk/keys/ https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+    languageConfig.compilers.leiningen.install = `${sudo}nexss java install
+${sudo}wget -P /etc/apk/keys/ https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 ${sudo}apk add --no-cache --repository=https://apkproxy.herokuapp.com/sgerrand/alpine-pkg-leiningen leiningen=2.9.1-r0`;
     break;
   default:
     languageConfig.compilers.leiningen.install = process.replacePMByDistro(
-      `${sudo} apt-get install -y wget
+      `${sudo}nexss java install
+${sudo} apt-get install -y wget
 ${sudo}wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 ${sudo}chmod +x lein
 ${sudo}mv lein /usr/local/bin
